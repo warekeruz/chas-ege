@@ -1,4 +1,3 @@
-//РАБОТАЕТ
 //59. Задание 4 № 320211
 //Автоматическая линия изготавливает батарейки. Вероятность того, что готовая
 //батарейка неисправна, равна 0,02. Перед упаковкой каждая батарейка проходит
@@ -18,9 +17,9 @@
     var answers;
 
     if (brak_or_not == 'будет забракована'){
-        answers = verneispr * verzabrakneispr + ((1 - verneispr) * verzabrispr)
+        answers = verneispr * verzabrakneispr + ((1 - verneispr) * verzabrispr);
     }
-    else answers = 1 - (verneispr * verzabrakneispr + ((1 - verneispr) * verzabrispr))
+    else answers = 1 - (verneispr * verzabrakneispr + ((1 - verneispr) * verzabrispr));
 
 
     NAtask.setTask({
