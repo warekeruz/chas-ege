@@ -9,11 +9,11 @@
     'use strict';
     NAinfo.requireApiVersion(0, 0);
 
-    const sorevn = ['соревнований', 'чемпионата', 'турнира'].iz();
-    const sport = ['футбольной', 'волейбольной', 'баскетбольной', 'хоккейной', 'теннисной', 'бейсбольной'].iz();
-    const vopros = ['удастся', ' не удастся'].iz();
-    const veroyatnost = [0.1, 0.2, 0.3, 0.4].iz();
-    const vsego = sluchch(4, 9);
+    let sorevn = ['соревнований', 'чемпионата', 'турнира'].iz();
+    let sport = ['футбольной', 'волейбольной', 'баскетбольной', 'хоккейной', 'теннисной', 'бейсбольной'].iz();
+    let vopros = ['удастся', ' не удастся'].iz();
+    let veroyatnost = [0.1, 0.2, 0.3, 0.4].iz();
+    let vsego = sluchch(4, 9);
 
     let pobeda, nichya;
 
@@ -37,8 +37,8 @@
             pobeda = vsego - nichya;
     }
 
-    const for_luck = 2 * veroyatnost * (1 - veroyatnost * 2) + veroyatnost ** 2;
-    const answers = vopros === 'удастся' ? for_luck : 1 - for_luck;
+    let for_luck = 2 * veroyatnost * (1 - veroyatnost * 2) + veroyatnost ** 2;
+    let answers = vopros === 'удастся' ? for_luck : 1 - for_luck;
 
     NAtask.setTask({
         text: `Чтобы пройти в следующий круг ${sorevn}, ${sport} команде нужно набрать хотя бы ${chislitlx(vsego, 'очко')} в двух играх. 
