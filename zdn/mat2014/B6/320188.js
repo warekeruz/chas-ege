@@ -9,46 +9,41 @@
     'use strict';
     NAinfo.requireApiVersion(0, 0);
 
-    var sorevn = ['соревнований', 'чемпионата', 'турнира'].iz();
-    var sport = ['футбольной', 'волейбольной', 'баскетбольной', 'хоккейной', 'теннисной', 'бейсбольной'].iz();
-    var vopros = ['удастся', ' не удастся'].iz();;
-    var veroyatnost = [0.1, 0.2, 0.3, 0.4].iz();
-    var vsego = sluchch(4, 9);
-    var pobeda;
-    var nichya;
+    const sorevn = ['соревнований', 'чемпионата', 'турнира'].iz();
+    const sport = ['футбольной', 'волейбольной', 'баскетбольной', 'хоккейной', 'теннисной', 'бейсбольной'].iz();
+    const vopros = ['удастся', ' не удастся'].iz();
+    const veroyatnost = [0.1, 0.2, 0.3, 0.4].iz();
+    const vsego = sluchch(4, 9);
 
-    var answers;
+    let pobeda, nichya;
 
-    if (vsego == 4) {
-        nichya = 1;
-        pobeda = 3;
-    } else if ((vsego == 5) || (vsego == 6)) {
-        nichya = [1, 2].iz();
-        pobeda = vsego - nichya;
-    } else if ((vsego == 7) || (vsego == 8)) {
-        nichya = [1, 2, 3].iz();
-        pobeda = vsego - nichya;
-    } else {
-        nichya = [1, 2, 3, 4].iz();
-        pobeda = vsego - nichya;
+    switch (vsego) {
+        case 4:
+            nichya = 1;
+            pobeda = 3;
+            break;
+        case 5:
+        case 6:
+            nichya = [1, 2].iz();
+            pobeda = vsego - nichya;
+            break;
+        case 7:
+        case 8:
+            nichya = [1, 2, 3].iz();
+            pobeda = vsego - nichya;
+            break;
+        default:
+            nichya = [1, 2, 3, 4].iz();
+            pobeda = vsego - nichya;
     }
 
-    var for_luck = 2 * veroyatnost * (1 - veroyatnost * 2) + veroyatnost ** 2;
-    if (vopros == 'удастся')
-        answers = for_luck;
-    else
-        answers = 1 - for_luck;
-
+    const for_luck = 2 * veroyatnost * (1 - veroyatnost * 2) + veroyatnost ** 2;
+    const answers = vopros === 'удастся' ? for_luck : 1 - for_luck;
 
     NAtask.setTask({
-
-        text: 'Чтобы пройти в следующий круг ' + sorevn + ', ' + sport + ' команде нужно набрать ' +
-            'хотя бы ' + chislitlx(vsego, 'очко') + ' в двух играх. Если команда выигрывает, она получает ' + chislitlx(pobeda, 'очко') + ', ' +
-            'в случае ничьей — ' + chislitlx(nichya, 'очко') + ', если проигрывает — 0 очков. Найдите вероятность того, ' +
-            'что команде ' + vopros + ' выйти в следующий круг ' + sorevn + '. Считайте, что в ' +
-            'каждой игре вероятности выигрыша и проигрыша одинаковы и равны ' + veroyatnost + '.',
-
-
+        text: `Чтобы пройти в следующий круг ${sorevn}, ${sport} команде нужно набрать хотя бы ${chislitlx(vsego, 'очко')} в двух играх. 
+        Если команда выигрывает, она получает ${chislitlx(pobeda, 'очко')}, в случае ничьей — ${chislitlx(nichya, 'очко')}, если проигрывает — 0 очков. Найдите вероятность того, что команде ${vopros} выйти в следующий круг ${sorevn}. 
+        Считайте, что в каждой игре вероятности выигрыша и проигрыша одинаковы и равны ${veroyatnost}.`,
         answers,
     });
 })();
