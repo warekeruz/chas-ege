@@ -4,44 +4,30 @@
 //магазине выбирает случайную упаковку, в которой две таких батарейки.
 //Найдите вероятность того, что обе батарейки окажутся исправными.
 
-(function () {
-    'use strict';
-    NAinfo.requireApiVersion(0, 0);
-    var predmet = sklonlxkand(['батарейка', 'сережка', 'насадка', 'шайба', 'лампочка'].iz());
-    var mesto;
-    if ((predmet.ie == 'батарейка') || (predmet == 'лампочка'))
-        mesto = ['магазине', 'супермаркете', 'торговом центре', 'киоске'].iz();
-    else
-        mesto = ['магазине', 'торговом центре'].iz();
-    var k = [2,3].iz();
-    var kolvo = [,,'две', 'три'][k];
-    var nayti = ['исправными', 'неисправными'].iz();
-    var verbrak = (sluchch(1, 30)) / 100;
-    var verispr;
-    var mest;
-    var answers;
+(function() {
+	retryWhileError(function() {
+		NAinfo.requireApiVersion(0, 2);
+		'use strict';
 
-    if (kolvo == 'две')
-        mest = 'обе';
-    else
-        mest = 'все';
-    if (nayti == 'исправными') {
-        verispr = 1 - verbrak;
-        if (kolvo == 'две')
-            answers = verispr * verispr;
-        else
-            answers = verispr * verispr * verispr;
-    } else {
-        if (kolvo == 'две')
-            answers = verbrak * verbrak;
-        else
-            answers = verbrak * verbrak * verbrak;
-    }
+		let predmet = sklonlxkand(['батарейка', 'сережка', 'насадка', 'шайба', 'лампочка'].iz());
+		let mestoOptions = (predmet.ie === 'батарейка' || predmet.ie === 'лампочка') ? ['магазине', 'супермаркете',
+			'торговом центре', 'киоске'
+		] : ['магазине', 'торговом центре'];
+		let mesto = mestoOptions.iz();
 
-    NAtask.setTask({
-        text: 'Вероятность того, что ' + predmet.ie + ' бракованная, равна ' + verbrak + '. Покупатель в ' +
-            '' + mesto + ' выбирает случайную упаковку, в которой ' + kolvo + ' таких ' + predmet.im + '. ' +
-            'Найдите вероятность того, что ' + mest + ' ' + predmet.im + ' окажутся ' + nayti + '.',
-        answers,
-    });
+		let k = [2, 3].iz();
+		let kolvo = ['две', 'три'][k - 2];
+		let nayti = ['исправными', 'неисправными'].iz();
+		let verbrak = sluchch(1, 30) / 100;
+		let mest = (kolvo === 'две') ? 'обе' : 'все';
+
+		let verispr = 1 - verbrak;
+		let answers = (nayti === 'исправными') ? Math.pow(verispr, k) : Math.pow(verbrak, k);
+		genAssertZ1000(answers);
+
+		NAtask.setTask({
+			text: `Вероятность того, что ${predmet.ie} бракованная, равна ${verbrak}. Покупатель в ${mesto} выбирает случайную упаковку, в которой ${kolvo} таких ${predmet.im}. Найдите вероятность того, что ${mest} ${predmet.im} окажутся ${nayti}.`,
+			answers,
+		});
+	}, 100);
 })();
