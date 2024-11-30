@@ -7,16 +7,16 @@ if (power%2){
 	c *= [1,-1].iz();
 }
 var x=sluchch(1,9);
-var a = Math.pow(c,power)-b*x;
+var a = c.pow(power)-b*x;
 var textpower = ('['+power+']').esli(power!=2);
 
 var numerator = sl(1,9);
 var multiplier = sl(1,9);
 
 var parts = [
-	[ '\\sqrt'+textpower+'{'+[a,b+'x'].slag()+'}', c],
-	[ '\\sqrt'+textpower+'{\\frac{' + numerator.pow(power)*multiplier + '}{'+[a*multiplier,b*multiplier+'x'].slag()+'}}', numerator.texfrac(c)],
-	[ '\\sqrt'+textpower+'{\\frac{'+[a*multiplier,b*multiplier+'x'].slag()+'}{' + numerator.pow(power)*multiplier + '}}', c.texfrac(numerator)],
+	[ '\\sqrt'+textpower+'{'+[a,b+'x'].slag0()+'}', c],
+	[ '\\sqrt'+textpower+'{\\frac{' + numerator.pow(power)*multiplier + '}{'+[(''+a*multiplier).esli(a*multiplier),b*multiplier+'x'].slag()+'}}', numerator.texrndfrac(c)],
+	[ '\\sqrt'+textpower+'{\\frac{'+[(''+a*multiplier).esli(a*multiplier),b*multiplier+'x'].slag()+'}{' + numerator.pow(power)*multiplier + '}}', c.texrndfrac(numerator)],
 ].iz();
 
 
