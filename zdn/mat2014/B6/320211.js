@@ -5,31 +5,28 @@
 //Вероятность того, что система по ошибке забракует исправную батарейку, равна 0,01.
 //Найдите вероятность того, что случайно выбранная батарейка будет забракована системой контроля.
 
-(function () {
-    'use strict';
-    NAinfo.requireApiVersion(0, 0);
+(function() {
+	retryWhileError(function() {
+		NAinfo.requireApiVersion(0, 2);
+		'use strict';
 
-    var predm = sklonlxkand(['батарейка', 'лампочка', 'деталь', 'колба', 'ручка', 'колодка'].iz());
-    var brak_or_not = ['будет забракована', 'не будет забракована'].iz();
-    var verneispr = (sluchch(1, 15)) / 100;
-    var verzabrakneispr = (sluchch(95, 99)) / 100;
-    var verzabrispr = (sluchch(1, 5)) / 100;
-    var answers;
-
-    if (brak_or_not == 'будет забракована'){
-        answers = verneispr * verzabrakneispr + ((1 - verneispr) * verzabrispr);
-    }
-    else answers = 1 - (verneispr * verzabrakneispr + ((1 - verneispr) * verzabrispr));
-
-
-    NAtask.setTask({
-
-        text: 'Автоматическая линия изготавливает ' + predm.im + '. Вероятность того, что готовая ' +
-            '' + predm.ie + ' неисправна, равна ' + verneispr + '. Перед упаковкой каждая ' + predm.ie + ' проходит систему' +
-            ' контроля. Вероятность того, что система забракует неисправную ' + predm.ve + ', равна ' + verzabrakneispr + '. ' +
-            'Вероятность того, что система по ошибке забракует исправную ' + predm.ve + ', равна ' + verzabrispr + '. ' +
-            'Найдите вероятность того, что случайно выбранная ' + predm.ie + ' ' + brak_or_not + ' системой контроля.',
-
-        answers,
-    });
+		let predm = sklonlxkand(['батарейка', 'лампочка', 'деталь', 'колба', 'ручка', 'колодка'].iz());
+		let brak_or_not = ['будет забракована', 'не будет забракована'].iz();
+		let verneispr = (sluchch(1, 15)) / 100;
+		let verzabrakneispr = (sluchch(95, 99)) / 100;
+		let verzabrispr = (sluchch(1, 5)) / 100;
+		let answers = verneispr * verzabrakneispr + ((1 - verneispr) * verzabrispr);
+		
+		genAssertZ1000(answers);
+		
+		NAtask.setTask({
+			text: 'Автоматическая линия изготавливает ' + predm.im + '. Вероятность того, что готовая ' +
+				predm.ie + ' неисправна, равна ' + verneispr + '. Перед упаковкой каждая ' + predm.ie +
+				' проходит систему контроля. Вероятность того, что система забракует неисправную ' + predm.ve +
+				', равна ' + verzabrakneispr + '. Вероятность того, что система по ошибке забракует исправную ' + predm.ve +
+				', равна ' + verzabrispr + '. Найдите вероятность того, что случайно выбранная ' + predm.ie + ' ' +
+				brak_or_not + ' системой контроля.',
+			answers: (brak_or_not == 'будет забракована')? answers: 1 - answers,
+		});
+	}, 100);
 })();
