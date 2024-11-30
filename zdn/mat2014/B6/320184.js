@@ -5,42 +5,34 @@
 (function () {
 	'use strict';
 	NAinfo.requireApiVersion(0, 0);
-	var answers;
-	var times = ['дважды', 'трижды'].iz();
 
-	if (times == 'дважды'){
-		var kolvo = sluchch(2, 12);
-		if (kolvo <= 7){
-			answers = kolvo - 1;
-		} else {
-			answers = 13 - kolvo;
-		}
-	}
+	let times = ['дважды', 'трижды'].iz();
+	let kolvo;
+	let answers;
 
-	if (times == 'трижды'){
-		var kolvo = sluchch(3, 18);
-		if (kolvo <= 7){
-			var a = 1            
-			var b = 1
-			var c = 1
-			answers = kolvo - 1;
-		} else {
-			if (kolvo <= 13){
-				answers = 13 - kolvo;
-			} else {
-				if (kolvo <= 19){
+	switch (times) {
+		case 'дважды':
+			kolvo = sluchch(2, 12);
+			answers = kolvo <= 7 ? kolvo - 1 : 13 - kolvo;
+			break;
+		case 'трижды':
+			kolvo = sluchch(3, 18);
+			switch (true) {
+				case kolvo <= 7:
+					answers = kolvo - 1;
+					break;
+				case kolvo <= 13:
+					answers = 13 - kolvo;
+					break;
+				default:
 					answers = 19 - kolvo;
-				}
+					break;
 			}
-		}
+			break;
 	}
 
 	NAtask.setTask({
-
-		text: 'Игральный кубик бросают ' + times + ' . Сколько элементарных исходов ' +
-			'опыта благоприятствуют событию А = {сумма очков равна ' + kolvo + '}?',
-		
+		text: `Игральный кубик бросают ${times}. Сколько элементарных исходов опыта благоприятствуют событию А = {сумма очков равна ${kolvo}}?`,
 		answers,
-
 	});
 })();
